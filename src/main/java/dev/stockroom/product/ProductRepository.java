@@ -10,6 +10,15 @@ public interface ProductRepository extends ListCrudRepository<Product, Long> {
 
     List<Product> findAllByOrderByIdAsc();
 
+    @Query("SELECT * FROM product WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')) ORDER BY id ASC LIMIT :size OFFSET :offset")
+    List<Product> findByNameContainingIgnoreCasePaged(String name, int size, long offset);
+
+    @Query("SELECT COUNT(*) FROM product WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%'))")
+    long countByNameContainingIgnoreCase(String name);
+
+    @Query("SELECT * FROM product ORDER BY id ASC LIMIT :size OFFSET :offset")
+    List<Product> findAllPaged(int size, long offset);
+
     @Modifying
     @Query("UPDATE product SET stock = stock - :quantity WHERE id = :id AND stock >= :quantity")
     int decrementStockIfSufficient(long id, int quantity);

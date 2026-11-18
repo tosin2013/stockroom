@@ -3,6 +3,7 @@ package dev.stockroom;
 import dev.stockroom.product.InsufficientStockException;
 import dev.stockroom.product.ProductNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -31,6 +32,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus status = HttpStatus.NOT_FOUND;
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(status,
                 "Product with id " + ex.getId() + " was not found");
+        problem.setTitle(status.getReasonPhrase());
+        problem.setInstance(URI.create(request.getRequestURI()));
+        return ResponseEntity.status(status)
+                .header(HttpHeaders.CONTENT_TYPE, "application/problem+json")
+                .body(problem);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ProblemDetail> handleConstraintViolation(
+            ConstraintViolationException ex, HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(status,
+                "One or more parameters have validation errors");
         problem.setTitle(status.getReasonPhrase());
         problem.setInstance(URI.create(request.getRequestURI()));
         return ResponseEntity.status(status)
