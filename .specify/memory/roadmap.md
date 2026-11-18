@@ -1,16 +1,17 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: 1.0.0 → 1.0.1
-Bump rationale: PATCH, a status transition (003 planned → specced) with its spec dir.
+Version change: 1.0.1 → 1.0.2
+Bump rationale: PATCH, a status transition (004 planned → specced) with its spec dir.
 
 Changes this revision:
-  - 003 specced: spec, plan and tasks in specs/003-problem-details/
+  - 004 specced: spec, plan and tasks in specs/004-persistence/
 
 Earlier revisions:
+  - 1.0.1: 003 specced (specs/003-problem-details/)
   - 1.0.0: added specs 001–006 (001 and 002 specced; 003–006 planned); decisions C-01–C-04
 
-Specs affected: 003
+Specs affected: 004
 Open questions added/resolved: none
 
 Notes: drafted by the controller with the owner (planning PR); the owner's merge ratifies it.
@@ -84,12 +85,15 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Governed by:** C-01, C-02, C-03, C-04
 - **Spec dir:** specs/003-problem-details/
 
-### 004 — Persistence  [status: planned]
+### 004 — Persistence  [status: specced]
 
 - **Description:** Products are stored in embedded H2 through Spring Data JDBC.
 - **Outcome:** the products API behaves exactly as before, backed by a repository and a schema.
 - **Scope (in):** schema, repository, wiring; repository tests.
+- **Scope (out):** a file or server database; migrations tooling; the H2 console.
 - **Depends on:** 003
+- **Governed by:** C-01, C-02, C-03, C-04
+- **Spec dir:** specs/004-persistence/
 
 ### 005 — Reservations  [status: planned]
 
@@ -114,4 +118,4 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 
 ---
 
-**Version**: 1.0.1 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-18
+**Version**: 1.0.2 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-18
