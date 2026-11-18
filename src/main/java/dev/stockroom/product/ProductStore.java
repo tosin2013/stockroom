@@ -30,17 +30,18 @@ public class ProductStore {
 
     @Transactional
     public Reservation reserve(long id, int quantity) {
-        // Check the product exists first
-        Product product = repository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id));
-
         // Atomic conditional decrement: returns 1 if stock was sufficient, 0 otherwise
         int updated = repository.decrementStockIfSufficient(id, quantity);
         if (updated == 0) {
+            // Read after the failed update to get the authoritative stock (or detect missing product)
+            Product product = repository.findById(id)
+                    .orElseThrow(() -> new ProductNotFoundException(id));
             throw new InsufficientStockException(quantity, product.stock());
         }
 
-        int remainingStock = product.stock() - quantity;
-        return new Reservation(id, quantity, remainingStock);
+        // Read the stock in the same transaction, right after the decrement, for the exact figure
+        Product product = repository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id));
+        return new Reservation(id, quantity, product.stock());
     }
 }
