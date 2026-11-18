@@ -49,7 +49,7 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 
 ## Planned Specs
 
-### 001 — Scaffold  [status: specced]
+### 001 — Scaffold  [status: verified]
 
 - **Description:** The application starts, reports its health, and has its first test.
 - **Outcome:** `GET /actuator/health` answers `{"status":"UP"}`, only the health endpoint is
