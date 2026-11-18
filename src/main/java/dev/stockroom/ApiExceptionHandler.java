@@ -1,5 +1,6 @@
 package dev.stockroom;
 
+import dev.stockroom.product.InsufficientStockException;
 import dev.stockroom.product.ProductNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +33,22 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                 "Product with id " + ex.getId() + " was not found");
         problem.setTitle(status.getReasonPhrase());
         problem.setInstance(URI.create(request.getRequestURI()));
+        return ResponseEntity.status(status)
+                .header(HttpHeaders.CONTENT_TYPE, "application/problem+json")
+                .body(problem);
+    }
+
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<ProblemDetail> handleInsufficientStock(
+            InsufficientStockException ex, HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.CONFLICT;
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(status,
+                "Insufficient stock: requested " + ex.getRequested() + " but only " + ex.getAvailable() + " available");
+        problem.setTitle(status.getReasonPhrase());
+        problem.setInstance(URI.create(request.getRequestURI()));
+        problem.setProperty("requested", ex.getRequested());
+        problem.setProperty("available", ex.getAvailable());
         return ResponseEntity.status(status)
                 .header(HttpHeaders.CONTENT_TYPE, "application/problem+json")
                 .body(problem);
