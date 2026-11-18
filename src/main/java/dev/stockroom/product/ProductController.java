@@ -1,6 +1,7 @@
 package dev.stockroom.product;
 
 import jakarta.validation.Valid;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +13,11 @@ import java.util.Collection;
 public class ProductController {
 
     private final ProductStore productStore;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public ProductController(ProductStore productStore) {
+    public ProductController(ProductStore productStore, ApplicationEventPublisher eventPublisher) {
         this.productStore = productStore;
+        this.eventPublisher = eventPublisher;
     }
 
     @PostMapping
@@ -35,5 +38,15 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<Collection<Product>> getAll() {
         return ResponseEntity.ok(productStore.findAll());
+    }
+
+    @PostMapping("/{id}/reservations")
+    public ResponseEntity<Reservation> reserve(
+            @PathVariable long id,
+            @Valid @RequestBody ReservationRequest request) {
+        Reservation reservation = productStore.reserve(id, request.quantity());
+        eventPublisher.publishEvent(
+                new StockReserved(reservation.productId(), reservation.quantity(), reservation.remainingStock()));
+        return ResponseEntity.ok(reservation);
     }
 }
