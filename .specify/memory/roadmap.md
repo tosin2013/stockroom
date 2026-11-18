@@ -59,7 +59,7 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Governed by:** C-01, C-02, C-03, C-04
 - **Spec dir:** specs/001-scaffold/
 
-### 002 — Products API  [status: specced]
+### 002 — Products API  [status: verified]
 
 - **Description:** Create, read and list products held in memory.
 - **Outcome:** `POST /api/products` creates a product with a validated name and stock level;
