@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -26,6 +27,22 @@ public class ProductStore {
 
     public Collection<Product> findAll() {
         return repository.findAllByOrderByIdAsc();
+    }
+
+    public ProductPage findPage(String name, int page, int size) {
+        long offset = (long) page * size;
+        String trimmed = (name == null) ? "" : name.trim();
+        List<Product> content;
+        long totalElements;
+        if (trimmed.isEmpty()) {
+            content = repository.findAllPaged(size, offset);
+            totalElements = repository.count();
+        } else {
+            content = repository.findByNameContainingIgnoreCasePaged(trimmed, size, offset);
+            totalElements = repository.countByNameContainingIgnoreCase(trimmed);
+        }
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+        return new ProductPage(content, page, size, totalElements, totalPages);
     }
 
     @Transactional
