@@ -108,7 +108,7 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Governed by:** C-01, C-02, C-03, C-04
 - **Spec dir:** specs/005-reservations/
 
-### 006 — Paging and filtering  [status: specced]
+### 006 — Paging and filtering  [status: verified]
 
 - **Description:** List products a page at a time, optionally filtered by name.
 - **Outcome:** `GET /api/products?name=&page=&size=` returns a page with stable ordering.
