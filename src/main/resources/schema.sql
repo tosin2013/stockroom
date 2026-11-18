@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS product (
+    id    BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name  VARCHAR(100) NOT NULL,
+    stock INT          NOT NULL CHECK (stock >= 0)
+);
