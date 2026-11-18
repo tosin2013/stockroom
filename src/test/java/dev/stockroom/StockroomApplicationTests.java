@@ -42,8 +42,8 @@ class StockroomApplicationTests {
     }
 
     @Test
-    void productsEndpointDoesNotExistYet() throws Exception {
+    void productsEndpointReturnsOk() throws Exception {
         mockMvc.perform(get("/api/products"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isOk());
     }
 }
