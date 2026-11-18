@@ -85,7 +85,7 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Governed by:** C-01, C-02, C-03, C-04
 - **Spec dir:** specs/003-problem-details/
 
-### 004 — Persistence  [status: specced]
+### 004 — Persistence  [status: verified]
 
 - **Description:** Products are stored in embedded H2 through Spring Data JDBC.
 - **Outcome:** the products API behaves exactly as before, backed by a repository and a schema.
