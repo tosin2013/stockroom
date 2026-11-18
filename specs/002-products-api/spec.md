@@ -92,12 +92,19 @@ As a client, I can fetch one product by id or list them all.
 - **FR-006**: Request and response bodies MUST be Java records in the package
   `dev.stockroom.product`; products MUST be held in memory in a store safe for concurrent use.
 - **FR-007**: Tests for this item MUST be added under `src/test/java/dev/stockroom/`, and every
-  existing test MUST keep passing. No dependency may be added.
+  existing test MUST keep passing, except the one 001 test that expects `/api/products` not to
+  exist: this item replaces it (see Tests that may change). No dependency may be added.
 
 ## Allowed paths
 
 - `src/main/java/dev/stockroom/*`
 - `src/test/java/dev/stockroom/*`
+
+## Tests that may change
+
+- `src/test/java/dev/stockroom/StockroomApplicationTests.java`: its
+  `productsEndpointDoesNotExistYet` test expects `GET /api/products` to answer `404`; this item
+  adds that endpoint, so the test is removed or changed to expect `200`. Its other tests stay.
 
 ## Success Criteria *(mandatory)*
 
