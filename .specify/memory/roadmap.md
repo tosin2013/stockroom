@@ -1,17 +1,19 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: 1.0.1 → 1.0.2
-Bump rationale: PATCH, a status transition (004 planned → specced) with its spec dir.
+Version change: 1.0.2 → 1.0.3
+Bump rationale: PATCH, status transitions (005 and 006 planned → specced) with their spec dirs.
 
 Changes this revision:
-  - 004 specced: spec, plan and tasks in specs/004-persistence/
+  - 005 specced: spec, plan and tasks in specs/005-reservations/
+  - 006 specced: spec, plan and tasks in specs/006-paging/
 
 Earlier revisions:
+  - 1.0.2: 004 specced (specs/004-persistence/)
   - 1.0.1: 003 specced (specs/003-problem-details/)
   - 1.0.0: added specs 001–006 (001 and 002 specced; 003–006 planned); decisions C-01–C-04
 
-Specs affected: 004
+Specs affected: 005, 006
 Open questions added/resolved: none
 
 Notes: drafted by the controller with the owner (planning PR); the owner's merge ratifies it.
@@ -95,20 +97,26 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Governed by:** C-01, C-02, C-03, C-04
 - **Spec dir:** specs/004-persistence/
 
-### 005 — Reservations  [status: planned]
+### 005 — Reservations  [status: specced]
 
 - **Description:** Reserve stock for a product.
 - **Outcome:** `POST /api/products/{id}/reservations` lowers stock, or answers `409` as a
   Problem Detail when stock is short, and publishes a `StockReserved` application event.
 - **Scope (in):** the reservation endpoint, the event, tests.
+- **Scope (out):** storing reservations as records; releasing or expiring them.
 - **Depends on:** 004
+- **Governed by:** C-01, C-02, C-03, C-04
+- **Spec dir:** specs/005-reservations/
 
-### 006 — Paging and filtering  [status: planned]
+### 006 — Paging and filtering  [status: specced]
 
 - **Description:** List products a page at a time, optionally filtered by name.
 - **Outcome:** `GET /api/products?name=&page=&size=` returns a page with stable ordering.
 - **Scope (in):** query parameters, paging, tests.
+- **Scope (out):** changing the plain list (no parameters stays an array); sorting options.
 - **Depends on:** 004
+- **Governed by:** C-01, C-02, C-03, C-04
+- **Spec dir:** specs/006-paging/
 
 ---
 
@@ -118,4 +126,4 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 
 ---
 
-**Version**: 1.0.2 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-18
+**Version**: 1.0.3 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-18
