@@ -97,7 +97,7 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Governed by:** C-01, C-02, C-03, C-04
 - **Spec dir:** specs/004-persistence/
 
-### 005 — Reservations  [status: specced]
+### 005 — Reservations  [status: verified]
 
 - **Description:** Reserve stock for a product.
 - **Outcome:** `POST /api/products/{id}/reservations` lowers stock, or answers `409` as a
