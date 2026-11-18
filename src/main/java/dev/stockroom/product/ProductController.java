@@ -29,7 +29,7 @@ public class ProductController {
     public ResponseEntity<Product> getById(@PathVariable long id) {
         return productStore.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     @GetMapping
