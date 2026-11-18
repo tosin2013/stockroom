@@ -1,19 +1,19 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: 1.0.2 → 1.0.3
-Bump rationale: PATCH, status transitions (005 and 006 planned → specced) with their spec dirs.
+Version change: 1.0.3 → 1.1.0
+Bump rationale: MINOR, a new planned spec (007), specced in the same change.
 
 Changes this revision:
-  - 005 specced: spec, plan and tasks in specs/005-reservations/
-  - 006 specced: spec, plan and tasks in specs/006-paging/
+  - Added 007 (Reservations report the stock they left), specced in specs/007-reservation-stock/
 
 Earlier revisions:
+  - 1.0.3: 005 and 006 specced (specs/005-reservations/, specs/006-paging/)
   - 1.0.2: 004 specced (specs/004-persistence/)
   - 1.0.1: 003 specced (specs/003-problem-details/)
   - 1.0.0: added specs 001–006 (001 and 002 specced; 003–006 planned); decisions C-01–C-04
 
-Specs affected: 005, 006
+Specs affected: 007
 Open questions added/resolved: none
 
 Notes: drafted by the controller with the owner (planning PR); the owner's merge ratifies it.
@@ -118,6 +118,21 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Governed by:** C-01, C-02, C-03, C-04
 - **Spec dir:** specs/006-paging/
 
+### 007 — Reservations report the stock they left  [status: specced]
+
+- **Description:** A reservation's `remainingStock` (and a refusal's `available`) is the stock
+  right after its own update, even under concurrent reservations.
+- **Outcome:** concurrent reservations each report a distinct, correct `remainingStock`, in the
+  response and the `StockReserved` event; `409` reports the stock as it really is.
+- **Scope (in):** the reservation logic in `ProductStore`; concurrency tests.
+- **Scope (out):** any change to the endpoint's shape, status codes or the atomic decrement.
+- **Depends on:** 005
+- **Governed by:** C-01, C-02, C-03, C-04
+- **Spec dir:** specs/007-reservation-stock/
+- **Notes:** found in the owner's review of 005's PR (stockroom#25), merged as is: stock was
+  never oversold, but the reported figure came from a read taken before the update. 005's hidden
+  tests counted status codes and the final stock, so they did not catch it.
+
 ---
 
 ## Open Questions
@@ -126,4 +141,4 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 
 ---
 
-**Version**: 1.0.3 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-18
+**Version**: 1.1.0 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-18
