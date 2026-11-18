@@ -1,14 +1,16 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: none → 1.0.0
-Bump rationale: initial roadmap.
+Version change: 1.0.0 → 1.0.1
+Bump rationale: PATCH, a status transition (003 planned → specced) with its spec dir.
 
 Changes this revision:
-  - Added specs 001–006 (001 and 002 specced; 003–006 planned)
-  - Decisions recorded: C-01–C-04
+  - 003 specced: spec, plan and tasks in specs/003-problem-details/
 
-Specs affected: 001, 002, 003, 004, 005, 006
+Earlier revisions:
+  - 1.0.0: added specs 001–006 (001 and 002 specced; 003–006 planned); decisions C-01–C-04
+
+Specs affected: 003
 Open questions added/resolved: none
 
 Notes: drafted by the controller with the owner (planning PR); the owner's merge ratifies it.
@@ -71,13 +73,16 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Governed by:** C-01, C-02, C-03, C-04
 - **Spec dir:** specs/002-products-api/
 
-### 003 — Problem Details errors  [status: planned]
+### 003 — Problem Details errors  [status: specced]
 
 - **Description:** Errors are RFC 9457 Problem Details.
 - **Outcome:** validation failures return `400 application/problem+json` with per-field errors,
   and an unknown product id returns `404 application/problem+json`.
 - **Scope (in):** error handling for the products API.
+- **Scope (out):** per-error `type` URIs; error formats outside `/api/products`.
 - **Depends on:** 002
+- **Governed by:** C-01, C-02, C-03, C-04
+- **Spec dir:** specs/003-problem-details/
 
 ### 004 — Persistence  [status: planned]
 
@@ -109,4 +114,4 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 
 ---
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-18
+**Version**: 1.0.1 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-18
