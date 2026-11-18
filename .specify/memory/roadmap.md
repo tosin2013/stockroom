@@ -73,7 +73,7 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Governed by:** C-01, C-02, C-03, C-04
 - **Spec dir:** specs/002-products-api/
 
-### 003 — Problem Details errors  [status: specced]
+### 003 — Problem Details errors  [status: verified]
 
 - **Description:** Errors are RFC 9457 Problem Details.
 - **Outcome:** validation failures return `400 application/problem+json` with per-field errors,
