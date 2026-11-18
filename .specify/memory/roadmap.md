@@ -118,7 +118,7 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Governed by:** C-01, C-02, C-03, C-04
 - **Spec dir:** specs/006-paging/
 
-### 007 — Reservations report the stock they left  [status: specced]
+### 007 — Reservations report the stock they left  [status: verified]
 
 - **Description:** A reservation's `remainingStock` (and a refusal's `available`) is the stock
   right after its own update, even under concurrent reservations.
