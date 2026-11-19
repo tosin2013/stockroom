@@ -38,11 +38,22 @@ public class ProductStore {
             content = repository.findAllPaged(size, offset);
             totalElements = repository.count();
         } else {
-            content = repository.findByNameContainingIgnoreCasePaged(trimmed, size, offset);
-            totalElements = repository.countByNameContainingIgnoreCase(trimmed);
+            String escaped = escapeLike(trimmed);
+            content = repository.findByNameContainingIgnoreCasePaged(escaped, size, offset);
+            totalElements = repository.countByNameContainingIgnoreCase(escaped);
         }
         int totalPages = (int) Math.ceil((double) totalElements / size);
         return new ProductPage(content, page, size, totalElements, totalPages);
+    }
+
+    /**
+     * Escapes the LIKE wildcards {@code %}, {@code _} and the escape character itself
+     * ({@code \}) so they match only themselves. The backslash must be escaped first.
+     */
+    private static String escapeLike(String text) {
+        return text.replace("\\", "\\\\")
+                .replace("%", "\\%")
+                .replace("_", "\\_");
     }
 
     @Transactional
