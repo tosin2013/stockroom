@@ -1,19 +1,21 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: 1.0.3 → 1.1.0
-Bump rationale: MINOR, a new planned spec (007), specced in the same change.
+Version change: 1.1.0 → 1.2.0
+Bump rationale: MINOR, a new planned spec (008), specced in the same change.
 
 Changes this revision:
-  - Added 007 (Reservations report the stock they left), specced in specs/007-reservation-stock/
+  - Added 008 (The name filter matches wildcard characters literally), specced in
+    specs/008-filter-wildcards/
 
 Earlier revisions:
+  - 1.1.0: added 007 (Reservations report the stock they left), specced
   - 1.0.3: 005 and 006 specced (specs/005-reservations/, specs/006-paging/)
   - 1.0.2: 004 specced (specs/004-persistence/)
   - 1.0.1: 003 specced (specs/003-problem-details/)
   - 1.0.0: added specs 001–006 (001 and 002 specced; 003–006 planned); decisions C-01–C-04
 
-Specs affected: 007
+Specs affected: 008
 Open questions added/resolved: none
 
 Notes: drafted by the controller with the owner (planning PR); the owner's merge ratifies it.
@@ -133,6 +135,20 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
   never oversold, but the reported figure came from a read taken before the update. 005's hidden
   tests counted status codes and the final stock, so they did not catch it.
 
+### 008 — The name filter matches wildcard characters literally  [status: specced]
+
+- **Description:** `%`, `_` and `\` in the `name` filter match only themselves.
+- **Outcome:** `GET /api/products?name=%` no longer matches every product, and `name=a_b` no
+  longer matches `axb`; the page and its counts include only literal matches.
+- **Scope (in):** escaping the filter text and the `LIKE` queries; tests.
+- **Scope (out):** any other change to paging or filtering (006).
+- **Depends on:** 006
+- **Governed by:** C-01, C-02, C-03, C-04
+- **Spec dir:** specs/008-filter-wildcards/
+- **Notes:** found in the owner's review of 006's PR (stockroom#33), merged as is: the filter
+  text went into the `LIKE` pattern unescaped. 006's hidden tests used plain text, so they did
+  not catch it.
+
 ---
 
 ## Open Questions
@@ -141,4 +157,4 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 
 ---
 
-**Version**: 1.1.0 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-18
+**Version**: 1.2.0 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-19
