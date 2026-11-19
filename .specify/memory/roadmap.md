@@ -1,21 +1,21 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: 1.1.0 → 1.2.0
-Bump rationale: MINOR, a new planned spec (008), specced in the same change.
+Version change: 1.2.0 → 1.3.0
+Bump rationale: MINOR, a new planned spec (009), specced in the same change.
 
 Changes this revision:
-  - Added 008 (The name filter matches wildcard characters literally), specced in
-    specs/008-filter-wildcards/
+  - Added 009 (Delete a product), specced in specs/009-delete-product/
 
 Earlier revisions:
+  - 1.2.0: added 008 (The name filter matches wildcard characters literally), specced
   - 1.1.0: added 007 (Reservations report the stock they left), specced
   - 1.0.3: 005 and 006 specced (specs/005-reservations/, specs/006-paging/)
   - 1.0.2: 004 specced (specs/004-persistence/)
   - 1.0.1: 003 specced (specs/003-problem-details/)
   - 1.0.0: added specs 001–006 (001 and 002 specced; 003–006 planned); decisions C-01–C-04
 
-Specs affected: 008
+Specs affected: 009
 Open questions added/resolved: none
 
 Notes: drafted by the controller with the owner (planning PR); the owner's merge ratifies it.
@@ -149,6 +149,19 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
   text went into the `LIKE` pattern unescaped. 006's hidden tests used plain text, so they did
   not catch it.
 
+### 009 — Delete a product  [status: specced]
+
+- **Description:** A client removes a product it no longer stocks.
+- **Outcome:** `DELETE /api/products/{id}` answers `204` and the product is gone from every read
+  and reservation; an unknown id answers `404` as a Problem Detail.
+- **Scope (in):** the endpoint, the store method, tests.
+- **Scope (out):** soft delete, undo, bulk delete.
+- **Depends on:** 003, 004
+- **Governed by:** C-01, C-02, C-03, C-04
+- **Spec dir:** specs/009-delete-product/
+- **Notes:** the first item whose hidden tests are drafted automatically by specfoundry's test
+  author (specfoundry 024); the owner still reviews and merges them.
+
 ---
 
 ## Open Questions
@@ -157,4 +170,4 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 
 ---
 
-**Version**: 1.2.0 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-19
+**Version**: 1.3.0 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-19
