@@ -65,6 +65,16 @@ public class ProductStore {
     }
 
     @Transactional
+    public Product setStock(long id, int stock) {
+        int updated = repository.setStock(id, stock);
+        if (updated == 0) {
+            throw new ProductNotFoundException(id);
+        }
+        return repository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id));
+    }
+
+    @Transactional
     public Reservation reserve(long id, int quantity) {
         // Atomic conditional decrement: returns 1 if stock was sufficient, 0 otherwise
         int updated = repository.decrementStockIfSufficient(id, quantity);
