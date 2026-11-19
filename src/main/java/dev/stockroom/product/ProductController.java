@@ -39,6 +39,12 @@ public class ProductController {
                 .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        productStore.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping
     public ResponseEntity<?> getAll(
             @RequestParam(required = false) String name,

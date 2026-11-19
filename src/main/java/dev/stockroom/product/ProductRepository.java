@@ -22,4 +22,8 @@ public interface ProductRepository extends ListCrudRepository<Product, Long> {
     @Modifying
     @Query("UPDATE product SET stock = stock - :quantity WHERE id = :id AND stock >= :quantity")
     int decrementStockIfSufficient(long id, int quantity);
+
+    @Modifying
+    @Query("DELETE FROM product WHERE id = :id")
+    int deleteProduct(long id);
 }
