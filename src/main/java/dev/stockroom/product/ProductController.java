@@ -61,6 +61,14 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Product> updateStock(
+            @PathVariable long id,
+            @Valid @RequestBody UpdateStockRequest request) {
+        Product product = productStore.setStock(id, request.stock());
+        return ResponseEntity.ok(product);
+    }
+
     @PostMapping("/{id}/reservations")
     public ResponseEntity<Reservation> reserve(
             @PathVariable long id,
