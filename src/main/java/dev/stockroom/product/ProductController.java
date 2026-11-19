@@ -55,6 +55,12 @@ public class ProductController {
         return ResponseEntity.ok(productStore.findPage(name, resolvedPage, resolvedSize));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        productStore.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/{id}/reservations")
     public ResponseEntity<Reservation> reserve(
             @PathVariable long id,
