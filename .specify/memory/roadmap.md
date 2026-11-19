@@ -149,7 +149,7 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
   text went into the `LIKE` pattern unescaped. 006's hidden tests used plain text, so they did
   not catch it.
 
-### 009 — Delete a product  [status: specced]
+### 009 — Delete a product  [status: verified]
 
 - **Description:** A client removes a product it no longer stocks.
 - **Outcome:** `DELETE /api/products/{id}` answers `204` and the product is gone from every read
