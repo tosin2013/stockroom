@@ -135,7 +135,7 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
   never oversold, but the reported figure came from a read taken before the update. 005's hidden
   tests counted status codes and the final stock, so they did not catch it.
 
-### 008 — The name filter matches wildcard characters literally  [status: specced]
+### 008 — The name filter matches wildcard characters literally  [status: verified]
 
 - **Description:** `%`, `_` and `\` in the `name` filter match only themselves.
 - **Outcome:** `GET /api/products?name=%` no longer matches every product, and `name=a_b` no
