@@ -164,7 +164,7 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
   author (specfoundry 024); the owner still reviews and merges them.
 
 
-### 010 — Update a product's stock  [status: specced]
+### 010 — Update a product's stock  [status: verified]
 
 - **Description:** A client sets a product's stock after a delivery or a count.
 - **Outcome:** `PATCH /api/products/{id}` with `{"stock": n}` sets the stock (`n >= 0`) and
