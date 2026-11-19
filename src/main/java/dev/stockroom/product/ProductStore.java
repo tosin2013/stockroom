@@ -25,6 +25,14 @@ public class ProductStore {
         return repository.findById(id);
     }
 
+    @Transactional
+    public void delete(long id) {
+        if (!repository.existsById(id)) {
+            throw new ProductNotFoundException(id);
+        }
+        repository.deleteById(id);
+    }
+
     public Collection<Product> findAll() {
         return repository.findAllByOrderByIdAsc();
     }
