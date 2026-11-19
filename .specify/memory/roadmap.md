@@ -1,13 +1,14 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: 1.2.0 → 1.3.0
-Bump rationale: MINOR, a new planned spec (009), specced in the same change.
+Version change: 1.3.0 → 1.4.0
+Bump rationale: MINOR, a new planned spec (010), specced in the same change.
 
 Changes this revision:
-  - Added 009 (Delete a product), specced in specs/009-delete-product/
+  - Added 010 (Update a product's stock), specced in specs/010-update-stock/
 
 Earlier revisions:
+  - 1.3.0: added 009 (Delete a product), specced
   - 1.2.0: added 008 (The name filter matches wildcard characters literally), specced
   - 1.1.0: added 007 (Reservations report the stock they left), specced
   - 1.0.3: 005 and 006 specced (specs/005-reservations/, specs/006-paging/)
@@ -15,7 +16,7 @@ Earlier revisions:
   - 1.0.1: 003 specced (specs/003-problem-details/)
   - 1.0.0: added specs 001–006 (001 and 002 specced; 003–006 planned); decisions C-01–C-04
 
-Specs affected: 009
+Specs affected: 010
 Open questions added/resolved: none
 
 Notes: drafted by the controller with the owner (planning PR); the owner's merge ratifies it.
@@ -162,6 +163,20 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Notes:** the first item whose hidden tests are drafted automatically by specfoundry's test
   author (specfoundry 024); the owner still reviews and merges them.
 
+
+### 010 — Update a product's stock  [status: specced]
+
+- **Description:** A client sets a product's stock after a delivery or a count.
+- **Outcome:** `PATCH /api/products/{id}` with `{"stock": n}` sets the stock (`n >= 0`) and
+  answers `200` with the product; invalid bodies answer `400` and unknown ids `404` as Problem
+  Details, changing nothing.
+- **Scope (in):** the endpoint, its validated body, the store method, tests.
+- **Scope (out):** changing a product's name; relative adjustments (`+n`/`-n`); bulk updates.
+- **Depends on:** 003, 004, 009
+- **Governed by:** C-01, C-02, C-03, C-04
+- **Spec dir:** specs/010-update-stock/
+- **Notes:** the first item carried end to end by specfoundry's step mode (specfoundry 021),
+  hidden tests drafted automatically (024); the owner still reviews and merges every PR.
 ---
 
 ## Open Questions
@@ -170,4 +185,4 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 
 ---
 
-**Version**: 1.3.0 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-19
+**Version**: 1.4.0 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-19
