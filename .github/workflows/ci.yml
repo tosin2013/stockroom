@@ -10,6 +10,14 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      # Maven Central sometimes answers 429 (Too Many Requests); main's run of 2026-11-19 failed
+      # that way. Maven retries 429 and 503 only 3 times, 5 s apart, by default: retry 8 times,
+      # 10 s apart (a Retry-After header from the server takes precedence).
+      MAVEN_ARGS: >-
+        -B
+        -Daether.transport.http.retryHandler.count=8
+        -Daether.transport.http.retryHandler.interval=10000
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
@@ -18,4 +26,20 @@ jobs:
           java-version: '21'
           cache: maven
       - name: Test
-        run: mvn -B test
+        # If Maven still can't download a dependency or plugin, run it again after a pause, up to
+        # 3 times. A failing test is never retried: it fails the job at once.
+        run: |
+          set -o pipefail
+          for attempt in 1 2 3; do
+            if mvn test 2>&1 | tee mvn.log; then
+              exit 0
+            fi
+            if ! grep -q -E 'Could not transfer artifact|Failed to read artifact descriptor|Could not resolve dependencies' mvn.log; then
+              exit 1
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              echo "::warning::Maven couldn't download from the repository (attempt $attempt of 3); retrying in $((attempt * 60)) s"
+              sleep $((attempt * 60))
+            fi
+          done
+          exit 1
