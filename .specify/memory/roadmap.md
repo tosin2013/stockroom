@@ -179,7 +179,7 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Notes:** the first item carried end to end by specfoundry's step mode (specfoundry 021),
   hidden tests drafted automatically (024); the owner still reviews and merges every PR.
 
-### 011 — Low-stock products  [status: specced]
+### 011 — Low-stock products  [status: verified]
 
 - **Description:** A client lists the products that are running low, to know what to reorder.
 - **Outcome:** `GET /api/products?maxStock=n` returns, as a page (006), only the products whose
