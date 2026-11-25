@@ -37,19 +37,31 @@ public class ProductStore {
         return repository.findAllByOrderByIdAsc();
     }
 
-    public ProductPage findPage(String name, int page, int size) {
+    public ProductPage findPage(String name, int page, int size, Integer maxStock) {
         long offset = (long) page * size;
         String trimmed = (name == null) ? "" : name.trim();
+        boolean hasName = !trimmed.isEmpty();
+        boolean hasMaxStock = maxStock != null;
+
         List<Product> content;
         long totalElements;
-        if (trimmed.isEmpty()) {
+        if (hasName) {
+            String escaped = escapeLike(trimmed);
+            if (hasMaxStock) {
+                content = repository.findByNameContainingIgnoreCaseAndStockAtMostPaged(escaped, maxStock, size, offset);
+                totalElements = repository.countByNameContainingIgnoreCaseAndStockAtMost(escaped, maxStock);
+            } else {
+                content = repository.findByNameContainingIgnoreCasePaged(escaped, size, offset);
+                totalElements = repository.countByNameContainingIgnoreCase(escaped);
+            }
+        } else if (hasMaxStock) {
+            content = repository.findByStockAtMostPaged(maxStock, size, offset);
+            totalElements = repository.countByStockAtMost(maxStock);
+        } else {
             content = repository.findAllPaged(size, offset);
             totalElements = repository.count();
-        } else {
-            String escaped = escapeLike(trimmed);
-            content = repository.findByNameContainingIgnoreCasePaged(escaped, size, offset);
-            totalElements = repository.countByNameContainingIgnoreCase(escaped);
         }
+
         int totalPages = (int) Math.ceil((double) totalElements / size);
         return new ProductPage(content, page, size, totalElements, totalPages);
     }

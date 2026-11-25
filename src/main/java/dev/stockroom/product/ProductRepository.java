@@ -16,6 +16,18 @@ public interface ProductRepository extends ListCrudRepository<Product, Long> {
     @Query("SELECT COUNT(*) FROM product WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')) ESCAPE '\\'")
     long countByNameContainingIgnoreCase(String name);
 
+    @Query("SELECT * FROM product WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')) ESCAPE '\\' AND stock <= :maxStock ORDER BY id ASC LIMIT :size OFFSET :offset")
+    List<Product> findByNameContainingIgnoreCaseAndStockAtMostPaged(String name, int maxStock, int size, long offset);
+
+    @Query("SELECT COUNT(*) FROM product WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')) ESCAPE '\\' AND stock <= :maxStock")
+    long countByNameContainingIgnoreCaseAndStockAtMost(String name, int maxStock);
+
+    @Query("SELECT * FROM product WHERE stock <= :maxStock ORDER BY id ASC LIMIT :size OFFSET :offset")
+    List<Product> findByStockAtMostPaged(int maxStock, int size, long offset);
+
+    @Query("SELECT COUNT(*) FROM product WHERE stock <= :maxStock")
+    long countByStockAtMost(int maxStock);
+
     @Query("SELECT * FROM product ORDER BY id ASC LIMIT :size OFFSET :offset")
     List<Product> findAllPaged(int size, long offset);
 
