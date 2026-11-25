@@ -1,13 +1,14 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version change: 1.3.0 → 1.4.0
-Bump rationale: MINOR, a new planned spec (010), specced in the same change.
+Version change: 1.4.0 → 1.5.0
+Bump rationale: MINOR, a new planned spec (011), specced in the same change.
 
 Changes this revision:
-  - Added 010 (Update a product's stock), specced in specs/010-update-stock/
+  - Added 011 (Low-stock products), specced in specs/011-low-stock/
 
 Earlier revisions:
+  - 1.4.0: added 010 (Update a product's stock), specced
   - 1.3.0: added 009 (Delete a product), specced
   - 1.2.0: added 008 (The name filter matches wildcard characters literally), specced
   - 1.1.0: added 007 (Reservations report the stock they left), specced
@@ -16,7 +17,7 @@ Earlier revisions:
   - 1.0.1: 003 specced (specs/003-problem-details/)
   - 1.0.0: added specs 001–006 (001 and 002 specced; 003–006 planned); decisions C-01–C-04
 
-Specs affected: 010
+Specs affected: 011
 Open questions added/resolved: none
 
 Notes: drafted by the controller with the owner (planning PR); the owner's merge ratifies it.
@@ -177,6 +178,22 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 - **Spec dir:** specs/010-update-stock/
 - **Notes:** the first item carried end to end by specfoundry's step mode (specfoundry 021),
   hidden tests drafted automatically (024); the owner still reviews and merges every PR.
+
+### 011 — Low-stock products  [status: specced]
+
+- **Description:** A client lists the products that are running low, to know what to reorder.
+- **Outcome:** `GET /api/products?maxStock=n` returns, as a page (006), only the products whose
+  stock is at most `n`, combinable with `name`, `page` and `size`; an invalid `maxStock`
+  answers `400` as a Problem Detail.
+- **Scope (in):** the query parameter, the filtered and counted queries, tests.
+- **Scope (out):** a minimum filter; sorting by stock; per-product reorder levels; the plain
+  list without parameters.
+- **Depends on:** 006, 008, 010
+- **Governed by:** C-01, C-02, C-03, C-04
+- **Spec dir:** specs/011-low-stock/
+- **Notes:** the first item built on a Mac (Apple Silicon, Docker Desktop) by chalkeus 031; its
+  hidden tests come from a separate test-author session, and the owner reviews and merges
+  every PR.
 ---
 
 ## Open Questions
@@ -185,4 +202,4 @@ Status legend (lifecycle): **undecided** · **needs-info** · **planned** ·
 
 ---
 
-**Version**: 1.4.0 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-19
+**Version**: 1.5.0 | **Ratified**: 2026-11-18 | **Last Amended**: 2026-11-25
